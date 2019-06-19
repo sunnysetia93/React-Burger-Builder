@@ -8,7 +8,7 @@ class Modal extends Component {
     // performance improvement - checks if props have changed and then only renders Modal & its children i.e. OrderSummary
     // OrderSummary will not render unncessarily as it is not shown in modal.
     shouldComponentUpdate(nextProps,nextState){
-        return nextProps.show!==this.props.props;
+        return nextProps.show!==this.props.show || nextProps.children !== this.props.children;
     }
 
     render(){
