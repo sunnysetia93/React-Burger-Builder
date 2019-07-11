@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import Button from '../../../components/UI/Button/Button';
 import cssClasses from './ContactData.css';
-import axios from '../../../hoc/axios-orders'
-import Spinner from '../../../components/UI/Spinner/Spinner'
+import axios from '../../../hoc/axios-orders';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../.././../components/UI/Input/Input';
+
 class ContactData extends Component {
     constructor(props){
         super(props);
