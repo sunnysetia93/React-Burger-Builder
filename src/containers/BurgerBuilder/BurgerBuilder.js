@@ -9,7 +9,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
 import axios from '../../hoc/axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import * as actionTypes from '../../store/actions/actionTypes';
+import * as actionCreators from '../../store/actions/index';
 
 class BurgerBuilder extends Component{
     
@@ -21,11 +21,13 @@ class BurgerBuilder extends Component{
         error:false
     }
     componentDidMount(){
-        axios.get('/ingredients.json')
-            .then(response=>{
-                this.setState({ingredients:response.data})
-            })
-            .catch(err=>this.setState({error:true}));
+        // axios.get('/ingredients.json')
+        //     .then(response=>{
+        //         this.setState({ingredients:response.data})
+        //     })
+        //     .catch(err=>this.setState({error:true}));
+
+        this.props.onInitIngredients();
     }
 
     // addIngredientHandler = (type)=>{
@@ -108,7 +110,7 @@ class BurgerBuilder extends Component{
         }
 
         let orderSummary =  null;
-        let burger = this.state.error ? <p>Ingredients can't be loaded !</p> : <Spinner />
+        let burger = this.props.error ? <p>Ingredients can't be loaded !</p> : <Spinner />
 
         if(this.props.ings){
             burger= <Aux>
@@ -146,14 +148,16 @@ class BurgerBuilder extends Component{
 const mapStateToProps = state =>{
     return {
         ings:state.ingredients,
-        price:state.totalPrice
+        price:state.totalPrice,
+        error:state.error
     }
 }
 
 const mapDispatchToProps = dispatch =>{
     return {
-        onIngredientAdded: (ingName) => dispatch({type:actionTypes.ADD_INGREDIENT, ingredientName:ingName}),
-        onIngredientRemoved: (ingName) => dispatch({type:actionTypes.REMOVE_INGREDIENT, ingredientName:ingName})
+        onIngredientAdded: (ingName) => dispatch(actionCreators.addIngredient(ingName)),
+        onIngredientRemoved: (ingName) => dispatch(actionCreators.removeIngredient(ingName)),
+        onInitIngredients: () => dispatch(actionCreators.initIngredients())
     }
 }
 
