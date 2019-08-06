@@ -133,7 +133,7 @@ class ContactData extends Component {
                 <Button btnType="Success" clicked={this.orderHandler} disabled={!this.state.formIsvalid}>ORDER</Button>
             </form>
         );
-        if(this.state.loading){
+        if(this.props.loading){
             form = <Spinner />
         }
         return (
@@ -147,12 +147,15 @@ class ContactData extends Component {
     }
 const mapStateToProps = state =>{
     return {
-        ings:state.ingredients,
-        price:state.totalPrice
+        ings:state.burg.ingredients,
+        price:state.burg.totalPrice,
+        loading:state.ord.loading
     }
 }
 
 const mapDispatchToProps = dispatch =>{
-    onOrderBurger: (orderData)=>dispatch(actionCreators.purchaseBurgerStart(orderData))
+    return {
+        onOrderBurger: (orderData)=>dispatch(actionCreators.purchaseBurger(orderData))
+    };
 }
 export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(ContactData,axios));
